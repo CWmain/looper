@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1ee6150110pc"]
+[gd_scene load_steps=3 format=3 uid="uid://c1ee6150110pc"]
+
+[ext_resource type="Script" uid="uid://bsbbttudo2gdk" path="res://Objects/Looper/live_looper.gd" id="1_jvv14"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mvdyd"]
 bg_color = Color(0, 1, 0, 1)
@@ -17,3 +19,4 @@ z_index = 1
 offset_right = 50.0
 offset_bottom = 50.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mvdyd")
+script = ExtResource("1_jvv14")

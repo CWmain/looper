@@ -8,7 +8,7 @@ https://www.youtube.com/watch?app=desktop&v=DlRP-UBR-2A&ab_channel=CodingWithRus
 # Exports
 @export var looper_Scene: PackedScene
 @export var portalImage: PackedScene
-
+@export_range(0, 1, 0.1) var percentOfWait: float = 0.9
 # Onready
 @onready var hud: CanvasLayer = $HUD
 @onready var move_timer: Timer = $MoveTimer
@@ -46,6 +46,7 @@ var moveDirection: Vector2
 var can_move: bool
 
 var tick = -1
+var tweensToComplete = 0
 
 func _ready() -> void:
 	new_game()
@@ -57,7 +58,7 @@ func new_game()->void:
 	moveDirection = up
 	can_move = true
 	game_started = false
-	
+
 	for portal in pastPortals:
 		portal.free()
 	pastPortals.clear()
@@ -67,6 +68,7 @@ func new_game()->void:
 func generate_looper() -> void:
 	for l in looper:
 		l.free()
+
 	looper_tween.clear()
 	looper_data.clear()
 	looper.clear()
@@ -75,26 +77,40 @@ func generate_looper() -> void:
 
 func _process(_delta: float) -> void:
 	if can_move:
-		if Input.is_action_just_pressed("Down") and moveDirection != up:
-			moveDirection = down
-			can_move = false
+		if Input.is_action_just_pressed("Down"):
 			if not game_started:
 				start_game()
-		if Input.is_action_just_pressed("Up") and moveDirection != down:
-			moveDirection = up
+				moveDirection = down
+				
+			if moveDirection != up:
+				moveDirection = down
 			can_move = false
+			
+		if Input.is_action_just_pressed("Up"):
 			if not game_started:
 				start_game()
-		if Input.is_action_just_pressed("Left") and moveDirection != right:
-			moveDirection = left
+				moveDirection = up
+			if moveDirection != down:
+				moveDirection = up
+			can_move = false
+				
+		if Input.is_action_just_pressed("Left"):
+			if moveDirection != right:
+				moveDirection = left
+				
 			can_move = false
 			if not game_started:
+				moveDirection = left
 				start_game()
-		if Input.is_action_just_pressed("Right") and moveDirection != left:
-			moveDirection = right
-			can_move = false
+				
+		if Input.is_action_just_pressed("Right"):
 			if not game_started:
+				moveDirection = right
 				start_game()
+				
+			if moveDirection != left:
+				moveDirection = right
+			can_move = false
 
 func start_game() -> void:
 	game_started = true
@@ -106,20 +122,22 @@ func pause_game() -> void:
 	move_timer.stop()
 
 func _on_move_timer_timeout() -> void:
+	tick += 1
 	can_move = true
 	
-	#TODO: Record the movements until orb is aquired
-	tick += 1
 	
 	for i in range(controlledLooperIndex):
 		if tick < len(looper_data[i]):
-			looper[i].position = (looper_data[i][tick] * cell_size) + Vector2(0, cell_size)
+			looper_tween[i] = get_tree().create_tween()
+			looper_tween[i].tween_property(looper[i], "position", (looper_data[i][tick] * cell_size) + Vector2(0, cell_size), move_timer.wait_time*percentOfWait)
+			#looper[i].position = (looper_data[i][tick] * cell_size) + Vector2(0, cell_size)
 	
 	looper_data[controlledLooperIndex].append(looper_data[controlledLooperIndex][-1]+moveDirection) 
 	#TODO: Tween causes issues when resetting board will solve later
-	#looper_tween[controlledLooperIndex] = create_tween()
-	#looper_tween[controlledLooperIndex].tween_property(looper[controlledLooperIndex], "position", (looper_data[controlledLooperIndex][-1] * cell_size) + Vector2(0, cell_size), move_timer.wait_time)
-	looper[controlledLooperIndex].position = (looper_data[controlledLooperIndex][-1] * cell_size) + Vector2(0, cell_size)
+	looper_tween[controlledLooperIndex] = get_tree().create_tween()
+	looper_tween[controlledLooperIndex].tween_property(looper[controlledLooperIndex], "position", (looper_data[controlledLooperIndex][-1] * cell_size) + Vector2(0, cell_size), move_timer.wait_time*percentOfWait)
+
+	#looper[controlledLooperIndex].position = (looper_data[controlledLooperIndex][-1] * cell_size) + Vector2(0, cell_size)
 	
 	check_out_of_bounds()
 	check_self_collision()
@@ -133,7 +151,8 @@ func check_self_collision() -> void:
 			continue
 		var allPositions = looper_data[i]
 		var checkIndex = tick if tick < len(allPositions) else len(allPositions)-1
-		if allPositions[checkIndex] == looper_data[controlledLooperIndex][tick]:
+		
+		if tick < len(allPositions) and allPositions[tick] == looper_data[controlledLooperIndex][tick]:
 			end_game()
 			break
 
@@ -162,8 +181,12 @@ func move_portal() -> void:
 	
 func check_portal_entered() -> void:
 	if portal_pos == looper_data[controlledLooperIndex][-1]:
+		
 		# Reset all loopers to starting position
 		for i in range(0, len(looper)):
+			if looper_tween[i].is_running():
+				await looper_tween[i].finished
+				looper_tween[i].kill()
 			looper[i].position = (looper_data[i][0] * cell_size) + Vector2(0, cell_size)
 		
 		# Create a new looper at portal collision location
@@ -177,9 +200,9 @@ func newLooper(spawnLocation: Vector2) -> void:
 	# Gray out old looper if not first looper
 	if controlledLooperIndex >= 0:
 		looper[controlledLooperIndex].self_modulate = Color.DARK_SLATE_GRAY
-	
+
 	controlledLooperIndex += 1
-	#looper_tween.append(Tween)
+	looper_tween.append(null)
 	looper_data.append([])
 	looper_data[controlledLooperIndex].append(spawnLocation)
 	var curLooper = looper_Scene.instantiate()
