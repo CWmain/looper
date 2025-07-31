@@ -13,6 +13,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [node name="LiveLooper" type="Panel"]
+z_index = 1
 offset_right = 50.0
 offset_bottom = 50.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mvdyd")

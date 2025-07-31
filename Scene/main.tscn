@@ -9,6 +9,7 @@
 [node name="Main" type="Node"]
 script = ExtResource("1_f6udf")
 looper_Scene = ExtResource("2_2wwxx")
+portalImage = ExtResource("4_3amdw")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(500, 550)

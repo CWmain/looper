@@ -7,6 +7,7 @@ https://www.youtube.com/watch?app=desktop&v=DlRP-UBR-2A&ab_channel=CodingWithRus
 """
 # Exports
 @export var looper_Scene: PackedScene
+@export var portalImage: PackedScene
 
 # Onready
 @onready var hud: CanvasLayer = $HUD
@@ -32,6 +33,7 @@ var controlledLooperIndex = -1
 
 # Portal Variables
 var portal_pos: Vector2
+var pastPortals: Array
 var regen_portal: bool = true
 
 # Movement variables
@@ -55,6 +57,10 @@ func new_game()->void:
 	moveDirection = up
 	can_move = true
 	game_started = false
+	
+	for portal in pastPortals:
+		portal.free()
+	pastPortals.clear()
 	generate_looper()
 	move_portal()
 	
@@ -126,7 +132,8 @@ func check_self_collision() -> void:
 		if i == controlledLooperIndex:
 			continue
 		var allPositions = looper_data[i]
-		if tick < len(allPositions) and allPositions[tick] == looper_data[controlledLooperIndex][tick]:
+		var checkIndex = tick if tick < len(allPositions) else len(allPositions)-1
+		if allPositions[checkIndex] == looper_data[controlledLooperIndex][tick]:
 			end_game()
 			break
 
@@ -136,14 +143,21 @@ func check_out_of_bounds() -> void:
 	
 func end_game() -> void:
 	print("Game ended")
+	print("Score: " + str(score))
 	move_timer.stop()
+	# Move portal offscreen before reset to avoid a gray portal
+	time_portal.position = Vector2(-10, -10)
 	new_game()
 
 func move_portal() -> void:
 	# TODO: Ensure not placed ontop of something else
 	# Place randomly
+	var pastPortal = portalImage.instantiate()
+	pastPortal.self_modulate = Color.DARK_SLATE_GRAY
+	pastPortal.position = time_portal.position
+	add_child(pastPortal)
+	pastPortals.append(pastPortal)
 	portal_pos = Vector2(randi_range(0, cells-1), randi_range(0, cells-1))
-	print(portal_pos)
 	time_portal.position = (portal_pos * cell_size) + Vector2(0, cell_size)
 	
 func check_portal_entered() -> void:
@@ -160,6 +174,10 @@ func check_portal_entered() -> void:
 		score += 1
 
 func newLooper(spawnLocation: Vector2) -> void:
+	# Gray out old looper if not first looper
+	if controlledLooperIndex >= 0:
+		looper[controlledLooperIndex].self_modulate = Color.DARK_SLATE_GRAY
+	
 	controlledLooperIndex += 1
 	#looper_tween.append(Tween)
 	looper_data.append([])
