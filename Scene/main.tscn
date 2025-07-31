@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://harsxa8ogk8b"]
+
+[ext_resource type="Script" uid="uid://e8wrm7edfen1" path="res://Scene/main.gd" id="1_f6udf"]
+[ext_resource type="PackedScene" uid="uid://c1ee6150110pc" path="res://Objects/Looper/live_looper.tscn" id="2_2wwxx"]
+[ext_resource type="Texture2D" uid="uid://c2yp8m5dwhlx2" path="res://Scene/background.png" id="2_sblpm"]
+[ext_resource type="PackedScene" uid="uid://dj2afyf4bav74" path="res://UI/hud.tscn" id="3_r34rm"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_f6udf")
+looper_Scene = ExtResource("2_2wwxx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(500, 550)
+texture = ExtResource("2_sblpm")
+
+[node name="HUD" parent="." instance=ExtResource("3_r34rm")]
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

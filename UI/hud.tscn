@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj2afyf4bav74"]
+
+[ext_resource type="Script" uid="uid://6qv813tvkjhf" path="res://UI/hud.gd" id="1_ne75i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_levl0"]
+bg_color = Color(0.298039, 0.227451, 1, 1)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_ne75i")
+
+[node name="ScorePanel" type="Panel" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_levl0")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_right = 65.0
+offset_bottom = 50.0
+grow_horizontal = 2
+text = "SCORE: 50"
+horizontal_alignment = 1
+vertical_alignment = 1
