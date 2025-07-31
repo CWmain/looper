@@ -11,6 +11,7 @@ https://www.youtube.com/watch?app=desktop&v=DlRP-UBR-2A&ab_channel=CodingWithRus
 # Onready
 @onready var hud: CanvasLayer = $HUD
 @onready var move_timer: Timer = $MoveTimer
+@onready var time_portal: AnimatedSprite2D = $TimePortal
 
 # game variables
 var score: int = 0:
@@ -18,11 +19,18 @@ var score: int = 0:
 		score = value
 		hud.updateScore(value)
 var game_started: bool = false
+
+var cells: int = 20
 var cell_size: int = 50
+
 # looper variables
 var old_data: Array
 var looper_data: Array
 var looper: Array
+
+# Portal Variables
+var portal_pos: Vector2
+var regen_portal: bool = true
 
 # Movement variables
 var start_pos := Vector2(9,9)
@@ -37,10 +45,12 @@ func _ready() -> void:
 	new_game()
 	
 func new_game()->void:
-	score = 1
+	score = 0
 	moveDirection = up
 	can_move = true
+	game_started = false
 	generate_looper()
+	move_portal()
 	
 func generate_looper() -> void:
 	old_data.clear()
@@ -78,11 +88,38 @@ func _process(_delta: float) -> void:
 
 func start_game() -> void:
 	game_started = true
+	print("Started Timer")
 	move_timer.start()
 
 
 func _on_move_timer_timeout() -> void:
 	can_move = true
 	
+	#TODO: Record the movements until orb is aquired
+	# Does the movement
 	looper_data[0] += moveDirection
 	looper[0].position = (looper_data[0] * cell_size) + Vector2(0, cell_size)
+	
+	check_out_of_bounds()
+	#check_self_collision()
+	check_portal_entered()
+
+func check_out_of_bounds() -> void:
+	if looper_data[0].x < 0 or looper_data[0].x > cells - 1 or looper_data[0].y < 0 or looper_data[0].y > cells - 1:
+		end_game()
+	
+func end_game() -> void:
+	move_timer.stop()
+	new_game()
+
+func move_portal() -> void:
+	# TODO: Ensure not placed ontop of something else
+	# Place randomly
+	portal_pos = Vector2(randi_range(0, cells-1), randi_range(0, cells-1))
+	print(portal_pos)
+	time_portal.position = (portal_pos * cell_size) + Vector2(0, cell_size)
+	
+func check_portal_entered() -> void:
+	if portal_pos == looper_data[0]:
+		move_portal()
+		score += 1
