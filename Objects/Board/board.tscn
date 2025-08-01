@@ -13,4 +13,4 @@ looper_scene = ExtResource("3_jxd0u")
 portal_scene = ExtResource("4_s138n")
 
 [node name="Tick" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2

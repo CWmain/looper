@@ -1,25 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://harsxa8ogk8b"]
+[gd_scene load_steps=4 format=3 uid="uid://harsxa8ogk8b"]
 
 [ext_resource type="Script" uid="uid://e8wrm7edfen1" path="res://Scene/main.gd" id="1_f6udf"]
-[ext_resource type="PackedScene" uid="uid://c1ee6150110pc" path="res://Objects/Looper/live_looper.tscn" id="2_2wwxx"]
-[ext_resource type="Texture2D" uid="uid://c2yp8m5dwhlx2" path="res://Scene/background.png" id="2_sblpm"]
+[ext_resource type="PackedScene" uid="uid://c7mh08j832gep" path="res://Objects/Board/board.tscn" id="2_sblpm"]
 [ext_resource type="PackedScene" uid="uid://dj2afyf4bav74" path="res://UI/hud.tscn" id="3_r34rm"]
-[ext_resource type="PackedScene" uid="uid://dua5j1exfkurb" path="res://Objects/TimePortal/time_portal.tscn" id="4_3amdw"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_f6udf")
-looper_Scene = ExtResource("2_2wwxx")
-portalImage = ExtResource("4_3amdw")
-
-[node name="Background" type="Sprite2D" parent="."]
-position = Vector2(500, 550)
-texture = ExtResource("2_sblpm")
-
-[node name="MoveTimer" type="Timer" parent="."]
-wait_time = 0.1
-
-[node name="TimePortal" parent="." instance=ExtResource("4_3amdw")]
 
 [node name="HUD" parent="." instance=ExtResource("3_r34rm")]
 
-[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
+[node name="Board" parent="." instance=ExtResource("2_sblpm")]
+position = Vector2(0, 64)

@@ -9,7 +9,11 @@ var tickCount: int = 0
 var cell_size: int = 32
 var cells: int = 20
 
-var score: int = 0
+var score: int = 0:
+	set(value):
+		score = value
+		scoreChanged.emit(value)
+signal scoreChanged(new_score)
 
 var loopers: Array = []
 
@@ -84,7 +88,7 @@ func _on_tick() -> void:
 	
 	check_out_of_bounds()
 	check_portal_collision()
-	#check_self_collision()
+	check_self_collision()
 
 func active_looper_movement() -> void:
 	var currentLocation: Vector2 = loopers[-1].get_current_location()
@@ -133,6 +137,18 @@ func check_portal_collision() -> void:
 		# Create and append new looper
 		new_looper(loopers[-1].get_current_location())
 
+func check_self_collision() -> void:
+	# Nothing to collide with if only looper
+	if len(loopers) <= 1:
+		return
+	
+	for i in range(len(loopers)-1):
+		var curGhostPosition = loopers[i].get_tick_location(tickCount)
+		if loopers[-1].get_current_location() == curGhostPosition:
+			end_game()
+			break
+	
+
 func start_game() -> void:
 	game_started = true
 	print("Started Timer")
@@ -172,5 +188,5 @@ func end_game() -> void:
 	new_game()
 
 func gridToReal(gridPos: Vector2) -> Vector2:
-	var realPos = (gridPos * cell_size) #+ Vector2(0, cell_size)
+	var realPos = (gridPos * cell_size)
 	return realPos

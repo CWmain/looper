@@ -3,8 +3,10 @@ class_name Looper
 
 @export var tweenTime: float = 0.5
 
+@onready var sprite: Sprite2D = $Sprite2D
 
-var isCurrent: bool = true
+# Used to determin if as a ghost it is used in a collision
+var isActive: bool = true
 # Location data will be stored as grid coordinates
 var locationData: Array[Vector2]
 var currentTween: Tween
@@ -66,7 +68,7 @@ func get_current_location() -> Vector2:
 	return locationData[-1]
 
 func goGray() -> void:
-	self.self_modulate = Color.DARK_GRAY
+	sprite.self_modulate = Color.DARK_GRAY
 
 # Waits for the tween to finish, than kills it
 func kill_active_tween() -> void:
