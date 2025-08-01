@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcrhuql2nuymv"]
+
+[ext_resource type="Script" uid="uid://bpy6cowjom7fy" path="res://Objects/Looper/looper.gd" id="1_t06b1"]
+[ext_resource type="Texture2D" uid="uid://sas6q62pu6du" path="res://Objects/Looper/Looper.png" id="2_dt7v5"]
+
+[node name="Looper" type="Node2D"]
+script = ExtResource("1_t06b1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dt7v5")
+offset = Vector2(16, 16)

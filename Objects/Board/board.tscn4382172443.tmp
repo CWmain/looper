@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7mh08j832gep"]
+
+[ext_resource type="Script" uid="uid://cexs2ragjstqf" path="res://Objects/Board/board.gd" id="1_7cpxs"]
+[ext_resource type="Texture2D" uid="uid://cwcwssbtt61ol" path="res://Objects/Board/Board.png" id="1_aqkxy"]
+[ext_resource type="PackedScene" uid="uid://bcrhuql2nuymv" path="res://Objects/Looper/looper.tscn" id="3_jxd0u"]
+[ext_resource type="PackedScene" uid="uid://dua5j1exfkurb" path="res://Objects/TimePortal/time_portal.tscn" id="4_s138n"]
+
+[node name="Board" type="Sprite2D"]
+texture = ExtResource("1_aqkxy")
+offset = Vector2(320, 320)
+script = ExtResource("1_7cpxs")
+looper_scene = ExtResource("3_jxd0u")
+portal_scene = ExtResource("4_s138n")
+
+[node name="Tick" type="Timer" parent="."]
