@@ -31,6 +31,8 @@ var current_portal: Object
 var old_portals: Array
 var usedPortalPositions: Array
 
+signal game_over
+
 func _ready() -> void:
 	tick.timeout.connect(_on_tick)
 	new_game()
@@ -165,6 +167,7 @@ func new_game():
 	loopers.clear()
 	old_portals.clear()
 	usedPortalPositions.clear()
+	score = 0
 	if current_portal != null:
 		current_portal.queue_free()
 	
@@ -185,7 +188,7 @@ func end_game() -> void:
 	tick.stop()
 	# Move portal offscreen before reset to avoid a gray portal
 	current_portal.position = Vector2(-10, -10)
-	new_game()
+	game_over.emit()
 
 func gridToReal(gridPos: Vector2) -> Vector2:
 	var realPos = (gridPos * cell_size)

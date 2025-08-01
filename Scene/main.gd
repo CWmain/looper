@@ -7,9 +7,20 @@ https://www.youtube.com/watch?app=desktop&v=DlRP-UBR-2A&ab_channel=CodingWithRus
 """
 @onready var board: Sprite2D = $Board
 @onready var hud: CanvasLayer = $HUD
+@onready var game_over_screen: CanvasLayer = $GameOverScreen
 
 func _ready() -> void:
 	board.scoreChanged.connect(updateScore)
+	board.game_over.connect(showGameOverScreen)
+	game_over_screen.retry.connect(startNewGame)
 	
 func updateScore(value: int) -> void:
 	hud.updateScore(value)
+	game_over_screen.updateDisplayScore(value)
+
+func showGameOverScreen() -> void:
+	game_over_screen.show()
+
+func startNewGame() -> void:
+	game_over_screen.hide()
+	board.new_game()

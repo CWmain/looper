@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://harsxa8ogk8b"]
+[gd_scene load_steps=5 format=3 uid="uid://harsxa8ogk8b"]
 
 [ext_resource type="Script" uid="uid://e8wrm7edfen1" path="res://Scene/main.gd" id="1_f6udf"]
+[ext_resource type="PackedScene" uid="uid://dgrghbv4n28p3" path="res://UI/game_over_screen/game_over_screen.tscn" id="2_2wwxx"]
 [ext_resource type="PackedScene" uid="uid://c7mh08j832gep" path="res://Objects/Board/board.tscn" id="2_sblpm"]
 [ext_resource type="PackedScene" uid="uid://dj2afyf4bav74" path="res://UI/hud.tscn" id="3_r34rm"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_f6udf")
+
+[node name="GameOverScreen" parent="." instance=ExtResource("2_2wwxx")]
+visible = false
 
 [node name="HUD" parent="." instance=ExtResource("3_r34rm")]
 
