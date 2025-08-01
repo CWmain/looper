@@ -186,8 +186,7 @@ func end_game() -> void:
 	print("Game ended")
 	print("Score: " + str(score))
 	tick.stop()
-	# Move portal offscreen before reset to avoid a gray portal
-	current_portal.position = Vector2(-10, -10)
+
 	game_over.emit()
 
 func gridToReal(gridPos: Vector2) -> Vector2:

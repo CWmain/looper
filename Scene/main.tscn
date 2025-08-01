@@ -8,10 +8,10 @@
 [node name="Main" type="Node"]
 script = ExtResource("1_f6udf")
 
-[node name="GameOverScreen" parent="." instance=ExtResource("2_2wwxx")]
-visible = false
-
 [node name="HUD" parent="." instance=ExtResource("3_r34rm")]
 
 [node name="Board" parent="." instance=ExtResource("2_sblpm")]
 position = Vector2(0, 64)
+
+[node name="GameOverScreen" parent="." instance=ExtResource("2_2wwxx")]
+visible = false
