@@ -4,8 +4,10 @@ class_name Looper
 @export var tweenTime: float = 0.5
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var past_portal_explosion: CPUParticles2D = $PastPortalExplosion
 @onready var past_portal_sound: AudioStreamPlayer = $PastPortalSound
+
+@onready var past_portal_explosion: CPUParticles2D = $PastPortalExplosion
+@onready var crash_explosion: CPUParticles2D = $crashExplosion
 
 # Ensure portal explosion only used once
 var past_portal_explosion_used: bool = false
@@ -123,3 +125,7 @@ func kill_active_tween() -> void:
 
 func reachedPortal() -> void:
 	sprite.hide()
+
+func crashed() -> void:
+	sprite.hide()
+	crash_explosion.emitting = true

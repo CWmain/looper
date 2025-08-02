@@ -109,6 +109,7 @@ func ghost_looper_movement() -> void:
 func check_out_of_bounds() -> void:
 	var currentPosition = loopers[-1].get_current_location()
 	if currentPosition.x < 0 or currentPosition.y < 0 or currentPosition.x >= cells or currentPosition.y >= cells:
+		loopers[-1].crashed()
 		end_game()
 
 # Places the portal in a random unused location
@@ -133,7 +134,7 @@ func check_portal_collision() -> void:
 		# Explode and Move portal to new location
 		portal_explosion.position = gridToReal(portal_pos) + Vector2(16, 16)
 		portal_explosion.emitting = true
-		portal_sound.pitch_scale = 1.2 - randf_range(0,0.4)
+		portal_sound.pitch_scale = 1.1 - randf_range(0,0.2)
 		portal_sound.play()
 		placePastPortal()
 		move_portal()
@@ -168,15 +169,13 @@ func check_self_collision() -> void:
 		var previousGhostLocation = loopers[i].get_tick_location(tickCount-1)
 		
 		# End game if both are on same spot
-		if curLooperPosition == curGhostPosition:
+		var sameSpot: bool = curLooperPosition == curGhostPosition
+		var passedBy: bool = curLooperPosition == previousGhostLocation and previousLooperPosition == curGhostPosition
+		if sameSpot or passedBy:
+			loopers[-1].crashed()
+			loopers[i].crashed()
 			end_game()
 			break
-			
-		# End game if they are moving past each other i.e they swap places
-		if curLooperPosition == previousGhostLocation and previousLooperPosition == curGhostPosition:
-			end_game()
-			break
-	
 
 func start_game() -> void:
 	game_started = true
