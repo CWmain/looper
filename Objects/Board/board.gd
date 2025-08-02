@@ -115,11 +115,11 @@ func check_out_of_bounds() -> void:
 # Places the portal in a random unused location
 func move_portal() ->void:
 	var invalidPlacement = true
-	var newPlacement = Vector2(randi_range(0, cells-1), randi_range(0, cells-1))
+	var newPlacement: Vector2
 	while invalidPlacement:
+		newPlacement = Vector2(randi_range(0, cells-1), randi_range(0, cells-1))
 		if newPlacement not in usedPortalPositions:
 			invalidPlacement = false
-		newPlacement = Vector2(randi_range(0, cells-1), randi_range(0, cells-1))
 	usedPortalPositions.append(newPlacement)
 	portal_pos = newPlacement
 	current_portal.position = gridToReal(newPlacement)
