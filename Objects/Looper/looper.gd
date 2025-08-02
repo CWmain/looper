@@ -5,6 +5,7 @@ class_name Looper
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var past_portal_explosion: CPUParticles2D = $PastPortalExplosion
+@onready var past_portal_sound: AudioStreamPlayer = $PastPortalSound
 
 # Ensure portal explosion only used once
 var past_portal_explosion_used: bool = false
@@ -87,6 +88,8 @@ func play_tick_location(tick: int) -> void:
 		
 		if !past_portal_explosion_used:
 			past_portal_explosion.emitting = true
+			past_portal_sound.pitch_scale = 1.2 - randf_range(0,0.4)
+			past_portal_sound.play()
 			past_portal_explosion_used = true
 	else:
 		isActive = true

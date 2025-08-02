@@ -133,6 +133,7 @@ func check_portal_collision() -> void:
 		# Explode and Move portal to new location
 		portal_explosion.position = gridToReal(portal_pos) + Vector2(16, 16)
 		portal_explosion.emitting = true
+		portal_sound.pitch_scale = 1.2 - randf_range(0,0.4)
 		portal_sound.play()
 		placePastPortal()
 		move_portal()
@@ -191,6 +192,7 @@ func new_game():
 	# Recreate portal and Looper
 	can_move = true
 	portal_pos = Vector2(5, 5)
+	usedPortalPositions.append(portal_pos)
 	current_portal = portal_scene.instantiate()
 	add_child(current_portal)
 	current_portal.position = gridToReal(portal_pos)
