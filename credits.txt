@@ -1,3 +1,7 @@
 Portal Sound
 - https://pixabay.com/sound-effects/teleport-90137/
 - outroelison (Freesound)
+
+Box Crash
+- https://pixabay.com/sound-effects/box-crash-106687/
+- animationIsaac (Freesound)

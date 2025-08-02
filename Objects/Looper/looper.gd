@@ -4,9 +4,14 @@ class_name Looper
 @export var tweenTime: float = 0.5
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var past_portal_explosion: CPUParticles2D = $PastPortalExplosion
+
+# Ensure portal explosion only used once
+var past_portal_explosion_used: bool = false
 
 # Used to determin if as a ghost it is used in a collision
 var isActive: bool = true
+
 # Location data will be stored as grid coordinates
 var locationData: Array[Vector2]
 var currentTween: Tween
@@ -65,6 +70,8 @@ func setLocation(newLocation: Vector2) -> void:
 	# Ensure any previous movement is completed before moving
 	kill_active_tween()
 	sprite.show()
+	past_portal_explosion_used = false
+	isActive = true
 	var board = get_parent()
 	if board == null:
 		printerr("NO PARENT WILL NOT WORK")
@@ -74,6 +81,16 @@ func setLocation(newLocation: Vector2) -> void:
 
 # Assumed they have been correctly reset to the start
 func play_tick_location(tick: int) -> void:
+	if tick >= len(locationData):
+		isActive = false
+		sprite.hide()
+		
+		if !past_portal_explosion_used:
+			past_portal_explosion.emitting = true
+			past_portal_explosion_used = true
+	else:
+		isActive = true
+		sprite.show()
 	var toCheck: int = tick if tick < len(locationData) else len(locationData)-1
 	face_movement_direction(toCheck)
 	# Ensure any previous movement is completed before moving

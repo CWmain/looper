@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcrhuql2nuymv"]
+[gd_scene load_steps=4 format=3 uid="uid://bcrhuql2nuymv"]
 
 [ext_resource type="Script" uid="uid://bpy6cowjom7fy" path="res://Objects/Looper/looper.gd" id="1_t06b1"]
 [ext_resource type="Texture2D" uid="uid://sas6q62pu6du" path="res://Objects/Looper/Looper.png" id="2_dt7v5"]
+[ext_resource type="PackedScene" uid="uid://e83m3of2xe73" path="res://Particles/past_portal_explosion.tscn" id="3_g60c2"]
 
 [node name="Looper" type="Node2D"]
 script = ExtResource("1_t06b1")
@@ -11,3 +12,6 @@ tweenTime = 0.1
 z_index = 1
 position = Vector2(16, 16)
 texture = ExtResource("2_dt7v5")
+
+[node name="PastPortalExplosion" parent="." instance=ExtResource("3_g60c2")]
+position = Vector2(16, 16)

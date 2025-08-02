@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7mh08j832gep"]
+[gd_scene load_steps=9 format=3 uid="uid://c7mh08j832gep"]
 
 [ext_resource type="Script" uid="uid://cexs2ragjstqf" path="res://Objects/Board/board.gd" id="1_7cpxs"]
 [ext_resource type="Texture2D" uid="uid://cwcwssbtt61ol" path="res://Objects/Board/Board.png" id="1_aqkxy"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dua5j1exfkurb" path="res://Objects/TimePortal/time_portal.tscn" id="4_s138n"]
 [ext_resource type="PackedScene" uid="uid://buygbq57qa0ek" path="res://Particles/portal_explosion.tscn" id="5_0ar7e"]
 [ext_resource type="PackedScene" uid="uid://klcmf8ahv2fv" path="res://Objects/PastPortal/past_portal.tscn" id="5_17ue4"]
+[ext_resource type="AudioStream" uid="uid://dc26gov5qde52" path="res://Objects/TimePortal/portal.mp3" id="7_88ip3"]
+[ext_resource type="AudioStream" uid="uid://cgvukq2o7vu1k" path="res://Objects/Looper/collisionSound.mp3" id="8_b4o7w"]
 
 [node name="Board" type="Sprite2D"]
 texture = ExtResource("1_aqkxy")
@@ -19,3 +21,10 @@ past_portal_scene = ExtResource("5_17ue4")
 wait_time = 0.2
 
 [node name="PortalExplosion" parent="." instance=ExtResource("5_0ar7e")]
+
+[node name="PortalSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_88ip3")
+
+[node name="CollisionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_b4o7w")
+bus = &"SFX"

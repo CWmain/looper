@@ -33,11 +33,14 @@ var old_portals: Array
 var usedPortalPositions: Array
 
 @onready var portal_explosion: CPUParticles2D = $PortalExplosion
+@onready var portal_sound: AudioStreamPlayer = $PortalSound
 
+@onready var collision_sound: AudioStreamPlayer = $CollisionSound
 signal game_over
 
 func _ready() -> void:
 	tick.timeout.connect(_on_tick)
+	collision_sound.finished.connect(_on_collision_sound_finished)
 	new_game()
 	
 
@@ -130,6 +133,7 @@ func check_portal_collision() -> void:
 		# Explode and Move portal to new location
 		portal_explosion.position = gridToReal(portal_pos) + Vector2(16, 16)
 		portal_explosion.emitting = true
+		portal_sound.play()
 		placePastPortal()
 		move_portal()
 
@@ -153,6 +157,8 @@ func check_self_collision() -> void:
 		return
 	
 	for i in range(len(loopers)-1):
+		if !loopers[i].isActive:
+			continue 
 		var curGhostPosition = loopers[i].get_tick_location(tickCount)
 		if loopers[-1].get_current_location() == curGhostPosition:
 			end_game()
@@ -162,6 +168,7 @@ func check_self_collision() -> void:
 func start_game() -> void:
 	game_started = true
 	print("Started Timer")
+	tickCount = 0
 	tick.start()
 
 func pause_game() -> void:
@@ -192,11 +199,16 @@ func new_game():
 
 	game_started = false
 
+# This function starts the end game process, however we await the audio 
+# of collision to end before emitting game_over 
 func end_game() -> void:
 	print("Game ended")
 	print("Score: " + str(score))
 	tick.stop()
 
+	collision_sound.play()
+
+func _on_collision_sound_finished() -> void:
 	game_over.emit()
 
 func gridToReal(gridPos: Vector2) -> Vector2:
