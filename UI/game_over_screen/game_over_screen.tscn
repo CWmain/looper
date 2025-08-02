@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgrghbv4n28p3"]
+[gd_scene load_steps=5 format=3 uid="uid://dgrghbv4n28p3"]
 
 [ext_resource type="Script" uid="uid://c57dqsypmwbe7" path="res://UI/game_over_screen/game_over_screen.gd" id="1_4l40c"]
+[ext_resource type="PackedScene" uid="uid://cvei22r1caivk" path="res://UI/options/options.tscn" id="2_ni7qo"]
 [ext_resource type="Texture2D" uid="uid://b8sgbp52iblig" path="res://UI/game_over_screen/portal_background.png" id="2_u8cwl"]
 
 [sub_resource type="Theme" id="Theme_u8cwl"]
@@ -19,10 +20,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -178.5
+offset_top = -194.0
+offset_right = 178.5
+offset_bottom = 194.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_u8cwl")
@@ -43,3 +44,6 @@ text = "Main Menu"
 [node name="Options" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Options"
+
+[node name="Options" parent="." instance=ExtResource("2_ni7qo")]
+visible = false

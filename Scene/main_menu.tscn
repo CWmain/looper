@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuee83juxm348"]
+
+[ext_resource type="Script" uid="uid://cgld8mbkrexlm" path="res://Scene/main_menu.gd" id="1_ftydy"]
+[ext_resource type="PackedScene" uid="uid://d0tyxnxm1rgmu" path="res://Particles/crashExplosion.tscn" id="2_kqsxi"]
+[ext_resource type="PackedScene" uid="uid://cvei22r1caivk" path="res://UI/options/options.tscn" id="2_pvidh"]
+[ext_resource type="PackedScene" uid="uid://e83m3of2xe73" path="res://Particles/past_portal_explosion.tscn" id="3_pvidh"]
+[ext_resource type="PackedScene" uid="uid://buygbq57qa0ek" path="res://Particles/portal_explosion.tscn" id="4_hptlk"]
+
+[sub_resource type="Theme" id="Theme_ftydy"]
+default_font_size = 32
+
+[node name="Main_Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ftydy")
+
+[node name="Options" parent="." instance=ExtResource("2_pvidh")]
+visible = false
+
+[node name="MainMenuButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = -55.0
+offset_right = 65.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ftydy")
+
+[node name="Play" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+text = "Play"
+
+[node name="Options" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+text = "Options"
+
+[node name="crashExplosion" parent="." instance=ExtResource("2_kqsxi")]
+
+[node name="PastPortalExplosion" parent="." instance=ExtResource("3_pvidh")]
+
+[node name="PortalExplosion" parent="." instance=ExtResource("4_hptlk")]
+
+[connection signal="closeOption" from="Options" to="." method="_on_options_close_option"]
+[connection signal="pressed" from="MainMenuButtons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MainMenuButtons/Options" to="." method="_on_options_pressed"]
