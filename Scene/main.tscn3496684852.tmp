@@ -8,13 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://ctbyfxa4nnfa3" path="res://UI/pauseMenu/pause_screen.tscn" id="6_1xcnr"]
 
 [node name="Main" type="Node"]
-process_mode = 3
 script = ExtResource("1_f6udf")
 
 [node name="HUD" parent="." instance=ExtResource("3_r34rm")]
 
 [node name="Board" parent="." instance=ExtResource("2_sblpm")]
-process_mode = 1
 position = Vector2(0, 64)
 texture = ExtResource("4_3amdw")
 

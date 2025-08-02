@@ -16,6 +16,21 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_levl0")
 
+[node name="Pause" type="Button" parent="ScorePanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -15.5
+offset_right = -25.0
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "❚❚"
+
 [node name="ScoreLabel" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
@@ -28,3 +43,5 @@ grow_horizontal = 2
 text = "Score: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="ScorePanel/Pause" to="." method="_on_pause_pressed"]

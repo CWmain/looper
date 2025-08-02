@@ -1,18 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgrghbv4n28p3"]
+[gd_scene load_steps=5 format=3 uid="uid://ctbyfxa4nnfa3"]
 
-[ext_resource type="Script" uid="uid://c57dqsypmwbe7" path="res://UI/game_over_screen/game_over_screen.gd" id="1_4l40c"]
-[ext_resource type="Texture2D" uid="uid://bc2qwgu5qput0" path="res://UI/game_over_screen/Big_Portal_Background.png" id="2_feaio"]
-[ext_resource type="PackedScene" uid="uid://cvei22r1caivk" path="res://UI/options/options.tscn" id="2_ni7qo"]
+[ext_resource type="Script" uid="uid://boorsvv6qikge" path="res://UI/pauseMenu/pause_screen.gd" id="1_1d5kx"]
+[ext_resource type="Texture2D" uid="uid://bc2qwgu5qput0" path="res://UI/game_over_screen/Big_Portal_Background.png" id="2_rhsyp"]
+[ext_resource type="PackedScene" uid="uid://cvei22r1caivk" path="res://UI/options/options.tscn" id="3_f2jd1"]
 
 [sub_resource type="Theme" id="Theme_u8cwl"]
 default_font_size = 64
 
-[node name="GameOverScreen" type="CanvasLayer"]
-script = ExtResource("1_4l40c")
+[node name="pause_screen" type="CanvasLayer"]
+script = ExtResource("1_1d5kx")
 
 [node name="PortalBackground" type="Sprite2D" parent="."]
 position = Vector2(320, 350)
-texture = ExtResource("2_feaio")
+texture = ExtResource("2_rhsyp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 8
@@ -30,7 +30,7 @@ theme = SubResource("Theme_u8cwl")
 
 [node name="ScoreLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Score: 0"
+text = " "
 
 [node name="Retry" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -45,5 +45,10 @@ text = "Main Menu"
 layout_mode = 2
 text = "Options"
 
-[node name="Options" parent="." instance=ExtResource("2_ni7qo")]
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="Options" parent="." instance=ExtResource("3_f2jd1")]
+layer = 2
 visible = false

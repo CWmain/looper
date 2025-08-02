@@ -7,11 +7,12 @@ extends CanvasLayer
 signal closeOption
 
 func _ready() -> void:
-	print(db_to_linear(AudioServer.get_bus_volume_db(0)))
+	reloadSliders()
+
+func reloadSliders() -> void:
 	master.value = db_to_linear(AudioServer.get_bus_volume_db(0))
 	sfx.value = db_to_linear(AudioServer.get_bus_volume_db(1))
 	music.value = db_to_linear(AudioServer.get_bus_volume_db(2))
-
 
 func _on_master_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(0, linear_to_db(value))

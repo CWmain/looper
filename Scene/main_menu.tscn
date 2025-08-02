@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cuee83juxm348"]
+[gd_scene load_steps=8 format=3 uid="uid://cuee83juxm348"]
 
 [ext_resource type="Script" uid="uid://cgld8mbkrexlm" path="res://Scene/main_menu.gd" id="1_ftydy"]
+[ext_resource type="Texture2D" uid="uid://bc2qwgu5qput0" path="res://UI/game_over_screen/Big_Portal_Background.png" id="2_hptlk"]
 [ext_resource type="PackedScene" uid="uid://d0tyxnxm1rgmu" path="res://Particles/crashExplosion.tscn" id="2_kqsxi"]
 [ext_resource type="PackedScene" uid="uid://cvei22r1caivk" path="res://UI/options/options.tscn" id="2_pvidh"]
 [ext_resource type="PackedScene" uid="uid://e83m3of2xe73" path="res://Particles/past_portal_explosion.tscn" id="3_pvidh"]
@@ -17,6 +18,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ftydy")
+
+[node name="crashExplosion" parent="." instance=ExtResource("2_kqsxi")]
+z_index = 0
+
+[node name="PastPortalExplosion" parent="." instance=ExtResource("3_pvidh")]
+z_index = 0
+
+[node name="PortalExplosion" parent="." instance=ExtResource("4_hptlk")]
+z_index = 0
+
+[node name="PortalBackground" type="Sprite2D" parent="."]
+position = Vector2(320, 350)
+texture = ExtResource("2_hptlk")
 
 [node name="Options" parent="." instance=ExtResource("2_pvidh")]
 visible = false
@@ -43,12 +57,6 @@ text = "Play"
 [node name="Options" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
 text = "Options"
-
-[node name="crashExplosion" parent="." instance=ExtResource("2_kqsxi")]
-
-[node name="PastPortalExplosion" parent="." instance=ExtResource("3_pvidh")]
-
-[node name="PortalExplosion" parent="." instance=ExtResource("4_hptlk")]
 
 [connection signal="closeOption" from="Options" to="." method="_on_options_close_option"]
 [connection signal="pressed" from="MainMenuButtons/Play" to="." method="_on_play_pressed"]

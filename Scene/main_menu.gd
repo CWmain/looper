@@ -9,8 +9,13 @@ var play: PackedScene = load("res://Scene/main.tscn")
 @onready var main_menu_buttons: VBoxContainer = $MainMenuButtons
 @onready var options: CanvasLayer = $Options
 
+@onready var portal_background: Sprite2D = $PortalBackground
+@export var backgroundRotationSpeed: float = 0.1
 func _ready() -> void:
 	loadAllParticles()
+
+func _process(delta: float) -> void:
+	portal_background.rotate(backgroundRotationSpeed*delta)
 
 func _on_play_pressed() -> void:
 	get_tree().change_scene_to_packed(play)
