@@ -159,9 +159,21 @@ func check_self_collision() -> void:
 	
 	for i in range(len(loopers)-1):
 		if !loopers[i].isActive:
-			continue 
+			continue
+ 
+		var curLooperPosition = loopers[-1].get_current_location()
+		var previousLooperPosition = loopers[-1].get_tick_location(tickCount-1)
+		
 		var curGhostPosition = loopers[i].get_tick_location(tickCount)
-		if loopers[-1].get_current_location() == curGhostPosition:
+		var previousGhostLocation = loopers[i].get_tick_location(tickCount-1)
+		
+		# End game if both are on same spot
+		if curLooperPosition == curGhostPosition:
+			end_game()
+			break
+			
+		# End game if they are moving past each other i.e they swap places
+		if curLooperPosition == previousGhostLocation and previousLooperPosition == curGhostPosition:
 			end_game()
 			break
 	
