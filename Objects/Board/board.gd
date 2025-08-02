@@ -51,40 +51,27 @@ func new_looper(spawnLoc: Vector2) -> void:
 	
 
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("Down"):
+		if moveDirection != up:
+			moveDirection = down
+		
+	if Input.is_action_just_pressed("Up"):
+		if moveDirection != down:
+			moveDirection = up
+			
+	if Input.is_action_just_pressed("Left"):
+		if moveDirection != right:
+			moveDirection = left
+
+	if Input.is_action_just_pressed("Right"):
+		if moveDirection != left:
+			moveDirection = right
 	
 	if can_move:
-		if Input.is_action_just_pressed("Down"):
-			if game_started and moveDirection != up:
-				print("Up")
-				moveDirection = down
-			else:
-				start_game()
-				moveDirection = down
+		if !game_started and moveDirection != Vector2():
+			start_game()
 			can_move = false
-			
-		if Input.is_action_just_pressed("Up"):
-			if game_started and moveDirection != down:
-				moveDirection = up
-			else:
-				start_game()
-				moveDirection = up
-			can_move = false
-				
-		if Input.is_action_just_pressed("Left"):
-			if game_started and moveDirection != right:
-				moveDirection = left
-			else:
-				start_game()
-				moveDirection = left
-			can_move = false
-				
-		if Input.is_action_just_pressed("Right"):
-			if game_started and moveDirection != left:
-				moveDirection = right
-			else:
-				start_game()
-				moveDirection = right
-			can_move = false
+		
 
 func _on_tick() -> void:
 	#await await_all_tweens()
@@ -185,6 +172,7 @@ func start_game() -> void:
 
 func pause_game() -> void:
 	game_started = false
+	moveDirection = Vector2()
 	tick.stop()
 
 func new_game():
@@ -192,13 +180,16 @@ func new_game():
 	for looper in loopers:
 		looper.queue_free()
 	loopers.clear()
+	
 	for portal in old_portals:
 		portal.queue_free()
 	old_portals.clear()
 	usedPortalPositions.clear()
-	score = 0
 	if current_portal != null:
 		current_portal.queue_free()
+		
+	score = 0
+	moveDirection = Vector2()
 	
 	# Recreate portal and Looper
 	can_move = true
