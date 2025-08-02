@@ -11,6 +11,31 @@ var isActive: bool = true
 var locationData: Array[Vector2]
 var currentTween: Tween
 
+func face_movement_direction(lookup: int) -> void:
+	# If less than 2 location exists, default to up
+	if len(locationData) < 2:
+		sprite.rotation = 0
+		return
+		
+	# Look up current and minus previous than rotate to face
+	var moveDirection: Vector2
+	if lookup < 1:
+		moveDirection = locationData[-1] - locationData[-2]
+	else:
+		moveDirection = locationData[lookup] - locationData[lookup-1]
+		
+		
+	match moveDirection:
+		Vector2(0, 1):
+			sprite.rotation = PI
+		Vector2(1, 0):
+			sprite.rotation = PI/2
+		Vector2(-1, 0):
+			sprite.rotation = 3*PI/2
+		# Default to the up direction
+		_:
+			sprite.rotation = 0
+
 func startingLocation(loc: Vector2) -> void:
 	print("Adding start location")
 	locationData.append(loc)
@@ -31,6 +56,7 @@ func moveTo(newLocation: Vector2) -> void:
 		printerr("NO PARENT WILL NOT WORK")
 		return
 	locationData.append(newLocation)
+	face_movement_direction(-1)
 	currentTween = create_tween()
 	currentTween.tween_property(self, "position", board.gridToReal(newLocation), tweenTime)
 
@@ -38,7 +64,7 @@ func moveTo(newLocation: Vector2) -> void:
 func setLocation(newLocation: Vector2) -> void:
 	# Ensure any previous movement is completed before moving
 	kill_active_tween()
-
+	sprite.show()
 	var board = get_parent()
 	if board == null:
 		printerr("NO PARENT WILL NOT WORK")
@@ -49,7 +75,7 @@ func setLocation(newLocation: Vector2) -> void:
 # Assumed they have been correctly reset to the start
 func play_tick_location(tick: int) -> void:
 	var toCheck: int = tick if tick < len(locationData) else len(locationData)-1
-	
+	face_movement_direction(toCheck)
 	# Ensure any previous movement is completed before moving
 	kill_active_tween()
 
@@ -74,3 +100,6 @@ func goGray() -> void:
 func kill_active_tween() -> void:
 	if currentTween != null and currentTween.is_running():
 		currentTween.kill()
+
+func reachedPortal() -> void:
+	sprite.hide()

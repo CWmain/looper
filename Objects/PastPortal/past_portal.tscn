@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://klcmf8ahv2fv"]
+
+[ext_resource type="Texture2D" uid="uid://1pylj3b33kpl" path="res://Objects/PastPortal/PastPortal.png" id="1_yj6jy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1nll"]
+atlas = ExtResource("1_yj6jy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jymea"]
+atlas = ExtResource("1_yj6jy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klgdj"]
+atlas = ExtResource("1_yj6jy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2daes"]
+atlas = ExtResource("1_yj6jy")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fj3jl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1nll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jymea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klgdj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2daes")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PastPortal" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_fj3jl")
+autoplay = "default"
+offset = Vector2(16, 16)

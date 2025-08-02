@@ -9,5 +9,5 @@ tweenTime = 0.1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
+position = Vector2(16, 16)
 texture = ExtResource("2_dt7v5")
-offset = Vector2(16, 16)

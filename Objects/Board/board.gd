@@ -2,6 +2,7 @@ extends Sprite2D
 
 @export var looper_scene: PackedScene
 @export var portal_scene: PackedScene
+@export var past_portal_scene: PackedScene
 @export var spawnLocation: Vector2 = Vector2(9,9)
 @onready var tick: Timer = $Tick
 var tickCount: int = 0
@@ -30,6 +31,8 @@ var portal_pos: Vector2
 var current_portal: Object
 var old_portals: Array
 var usedPortalPositions: Array
+
+@onready var portal_explosion: CPUParticles2D = $PortalExplosion
 
 signal game_over
 
@@ -124,8 +127,13 @@ func check_portal_collision() -> void:
 		# Increment score
 		score += 1
 		pause_game()
-		# Move portal to new location
+		# Explode and Move portal to new location
+		portal_explosion.position = gridToReal(portal_pos) + Vector2(16, 16)
+		portal_explosion.emitting = true
+		placePastPortal()
 		move_portal()
+
+		loopers[-1].reachedPortal()
 		
 		# Reset all loopers to start pos
 		for looper in loopers:
@@ -165,6 +173,8 @@ func new_game():
 	for looper in loopers:
 		looper.queue_free()
 	loopers.clear()
+	for portal in old_portals:
+		portal.queue_free()
 	old_portals.clear()
 	usedPortalPositions.clear()
 	score = 0
@@ -192,3 +202,9 @@ func end_game() -> void:
 func gridToReal(gridPos: Vector2) -> Vector2:
 	var realPos = (gridPos * cell_size)
 	return realPos
+
+func placePastPortal() -> void:
+	var new_past_portal = past_portal_scene.instantiate()
+	add_child(new_past_portal)
+	old_portals.append(new_past_portal)
+	old_portals[-1].position = current_portal.position
