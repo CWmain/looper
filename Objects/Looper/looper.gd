@@ -2,6 +2,8 @@ extends Node2D
 class_name Looper
 
 @export var tweenTime: float = 0.5
+@export var activeLooperTexture: CompressedTexture2D
+@export var pastLooperTexture: CompressedTexture2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var past_portal_sound: AudioStreamPlayer = $PastPortalSound
@@ -116,6 +118,7 @@ func get_current_location() -> Vector2:
 	return locationData[-1]
 
 func goGray() -> void:
+	sprite.texture = pastLooperTexture
 	sprite.self_modulate = Color.DARK_GRAY
 
 # Waits for the tween to finish, than kills it

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcrhuql2nuymv"]
+[gd_scene load_steps=7 format=3 uid="uid://bcrhuql2nuymv"]
 
 [ext_resource type="Script" uid="uid://bpy6cowjom7fy" path="res://Objects/Looper/looper.gd" id="1_t06b1"]
 [ext_resource type="Texture2D" uid="uid://dk3dn6j2i7tn3" path="res://Objects/Looper/NewLooper.png" id="2_iqeho"]
+[ext_resource type="Texture2D" uid="uid://cqdvva3sgsqn2" path="res://Objects/Looper/PastLooper.png" id="3_d5nap"]
 [ext_resource type="PackedScene" uid="uid://e83m3of2xe73" path="res://Particles/past_portal_explosion.tscn" id="3_g60c2"]
 [ext_resource type="AudioStream" uid="uid://dkjlonpdvwa2g" path="res://Objects/PastPortal/past_portal_sound.mp3" id="4_8ch6o"]
 [ext_resource type="PackedScene" uid="uid://d0tyxnxm1rgmu" path="res://Particles/crashExplosion.tscn" id="4_iqeho"]
@@ -9,6 +10,8 @@
 [node name="Looper" type="Node2D"]
 script = ExtResource("1_t06b1")
 tweenTime = 0.15
+activeLooperTexture = ExtResource("2_iqeho")
+pastLooperTexture = ExtResource("3_d5nap")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1

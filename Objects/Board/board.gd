@@ -26,6 +26,7 @@ var down := Vector2(0, 1)
 var left := Vector2(-1, 0)
 var right := Vector2(1, 0)
 var moveDirection: Vector2 
+var oldMoveDirection: Vector2
 
 var portal_pos: Vector2
 var current_portal: Object
@@ -34,6 +35,8 @@ var usedPortalPositions: Array
 
 @onready var portal_explosion: CPUParticles2D = $PortalExplosion
 @onready var portal_sound: AudioStreamPlayer = $PortalSound
+
+@onready var turn_sound: AudioStreamPlayer = $TurnSound
 
 @onready var collision_sound: AudioStreamPlayer = $CollisionSound
 signal game_over
@@ -77,7 +80,10 @@ func _on_tick() -> void:
 	#await await_all_tweens()
 	tickCount += 1
 	can_move = true
-
+	if moveDirection != oldMoveDirection:
+		turn_sound.pitch_scale = 0.95 + randf_range(0.0, 0.1)
+		turn_sound.play()
+	oldMoveDirection = moveDirection
 	active_looper_movement()
 	ghost_looper_movement()
 	
@@ -131,7 +137,6 @@ func check_portal_collision() -> void:
 		# Reset all loopers to start pos
 		for looper in loopers:
 			looper.goGray()
-			print(looper.locationData[0])
 			looper.setLocation(looper.locationData[0])
 		
 		# Reset tick

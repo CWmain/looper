@@ -7,6 +7,7 @@ var play: PackedScene = load("res://Scene/main.tscn")
 @onready var portal_explosion: CPUParticles2D = $PortalExplosion
 
 @onready var main_menu_buttons: VBoxContainer = $MainMenuButtons
+@onready var main_menu_decorations: Node2D = $MainMenuDecorations
 @onready var options: CanvasLayer = $Options
 
 @onready var portal_background: Sprite2D = $PortalBackground
@@ -28,8 +29,10 @@ func loadAllParticles()->void:
 
 func _on_options_pressed() -> void:
 	main_menu_buttons.hide()
+	main_menu_decorations.hide()
 	options.show()
 
 func _on_options_close_option() -> void:
 	options.hide()
+	main_menu_decorations.show()
 	main_menu_buttons.show()

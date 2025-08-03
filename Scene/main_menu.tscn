@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cuee83juxm348"]
+[gd_scene load_steps=11 format=3 uid="uid://cuee83juxm348"]
 
 [ext_resource type="Script" uid="uid://cgld8mbkrexlm" path="res://Scene/main_menu.gd" id="1_ftydy"]
 [ext_resource type="Texture2D" uid="uid://bc2qwgu5qput0" path="res://UI/game_over_screen/Big_Portal_Background.png" id="2_hptlk"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cvei22r1caivk" path="res://UI/options/options.tscn" id="2_pvidh"]
 [ext_resource type="PackedScene" uid="uid://e83m3of2xe73" path="res://Particles/past_portal_explosion.tscn" id="3_pvidh"]
 [ext_resource type="PackedScene" uid="uid://buygbq57qa0ek" path="res://Particles/portal_explosion.tscn" id="4_hptlk"]
+[ext_resource type="Texture2D" uid="uid://cqdvva3sgsqn2" path="res://Objects/Looper/PastLooper.png" id="6_ejkra"]
+[ext_resource type="Texture2D" uid="uid://ck73xutpat0y4" path="res://Scene/Title.png" id="7_oqads"]
+[ext_resource type="Texture2D" uid="uid://dk3dn6j2i7tn3" path="res://Objects/Looper/NewLooper.png" id="8_s2f1d"]
 
 [sub_resource type="Theme" id="Theme_ftydy"]
 default_font_size = 32
@@ -31,6 +34,24 @@ z_index = 0
 [node name="PortalBackground" type="Sprite2D" parent="."]
 position = Vector2(320, 350)
 texture = ExtResource("2_hptlk")
+
+[node name="MainMenuDecorations" type="Node2D" parent="."]
+
+[node name="PastLooper" type="Sprite2D" parent="MainMenuDecorations"]
+position = Vector2(130, 447)
+rotation = 0.785397
+scale = Vector2(2, 2)
+texture = ExtResource("6_ejkra")
+
+[node name="NewLooper" type="Sprite2D" parent="MainMenuDecorations"]
+position = Vector2(505, 444)
+rotation = -0.785397
+scale = Vector2(2, 2)
+texture = ExtResource("8_s2f1d")
+
+[node name="Title" type="Sprite2D" parent="MainMenuDecorations"]
+position = Vector2(320, 129)
+texture = ExtResource("7_oqads")
 
 [node name="Options" parent="." instance=ExtResource("2_pvidh")]
 visible = false
