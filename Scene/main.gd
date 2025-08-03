@@ -28,7 +28,7 @@ func updateScore(value: int) -> void:
 	game_over_screen.updateDisplayScore(value)
 
 func showGameOverScreen() -> void:
-	MusicController.pauseMusic()
+	MusicController.playMenu()
 	game_over_screen.show()
 
 func startNewGame() -> void:
@@ -37,12 +37,12 @@ func startNewGame() -> void:
 	
 func loadMainMenu() -> void:
 	get_tree().paused = false
-	MusicController.pauseMusic()
+	MusicController.playMenu()
 	get_tree().change_scene_to_packed(main_menu_scene)
 
 func _pauseGame() -> void:
 	pause_screen.show()
-	MusicController.pauseMusic()
+	MusicController.playMenu()
 	get_tree().paused = true
 
 func _resumeGame() -> void:

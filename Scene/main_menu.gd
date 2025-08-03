@@ -13,6 +13,7 @@ var play: PackedScene = load("res://Scene/main.tscn")
 @export var backgroundRotationSpeed: float = 0.1
 func _ready() -> void:
 	loadAllParticles()
+	MusicController.playMenu()
 
 func _process(delta: float) -> void:
 	portal_background.rotate(backgroundRotationSpeed*delta)
