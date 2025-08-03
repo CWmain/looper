@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://daly6clxpacuq"]
+
+[ext_resource type="Script" uid="uid://c8rrhbx3o7al4" path="res://Music/Music_Controllerr/music_controller.gd" id="1_501s3"]
+[ext_resource type="AudioStream" uid="uid://b7fbr6qmnu5pn" path="res://Music/cool-hip-hop-loop-275527.mp3" id="1_dp1rh"]
+
+[node name="MusicController" type="Node"]
+script = ExtResource("1_501s3")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_dp1rh")
+volume_db = -10.0
+bus = &"Music"

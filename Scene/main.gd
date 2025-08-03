@@ -21,11 +21,14 @@ func _ready() -> void:
 	pause_screen.retry.connect(startNewGame)
 	pause_screen.main_menu.connect(loadMainMenu)
 	
+	MusicController.playGame()
+	
 func updateScore(value: int) -> void:
 	hud.updateScore(value)
 	game_over_screen.updateDisplayScore(value)
 
 func showGameOverScreen() -> void:
+	MusicController.pauseMusic()
 	game_over_screen.show()
 
 func startNewGame() -> void:
@@ -34,12 +37,15 @@ func startNewGame() -> void:
 	
 func loadMainMenu() -> void:
 	get_tree().paused = false
+	MusicController.pauseMusic()
 	get_tree().change_scene_to_packed(main_menu_scene)
 
 func _pauseGame() -> void:
 	pause_screen.show()
+	MusicController.pauseMusic()
 	get_tree().paused = true
 
 func _resumeGame() -> void:
 	pause_screen.hide()
+	MusicController.playGame()
 	get_tree().paused = false
