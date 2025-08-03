@@ -10,6 +10,8 @@ var play: PackedScene = load("res://Scene/main.tscn")
 @onready var main_menu_decorations: Node2D = $MainMenuDecorations
 @onready var options: CanvasLayer = $Options
 
+@onready var highscores: CanvasLayer = $Highscores
+
 @onready var portal_background: Sprite2D = $PortalBackground
 @export var backgroundRotationSpeed: float = 0.1
 func _ready() -> void:
@@ -36,3 +38,16 @@ func _on_options_close_option() -> void:
 	options.hide()
 	main_menu_decorations.show()
 	main_menu_buttons.show()
+
+
+func _on_high_scores_pressed() -> void:
+	main_menu_decorations.hide()
+	main_menu_buttons.hide()
+	highscores.reloadScores()
+	highscores.show()
+
+
+func _on_highscores_back() -> void:
+	main_menu_decorations.show()
+	main_menu_buttons.show()
+	highscores.hide()

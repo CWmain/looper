@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cuee83juxm348"]
+[gd_scene load_steps=12 format=3 uid="uid://cuee83juxm348"]
 
 [ext_resource type="Script" uid="uid://cgld8mbkrexlm" path="res://Scene/main_menu.gd" id="1_ftydy"]
 [ext_resource type="Texture2D" uid="uid://bc2qwgu5qput0" path="res://UI/game_over_screen/Big_Portal_Background.png" id="2_hptlk"]
 [ext_resource type="PackedScene" uid="uid://d0tyxnxm1rgmu" path="res://Particles/crashExplosion.tscn" id="2_kqsxi"]
 [ext_resource type="PackedScene" uid="uid://cvei22r1caivk" path="res://UI/options/options.tscn" id="2_pvidh"]
+[ext_resource type="PackedScene" uid="uid://bum3q5felcu51" path="res://UI/highscores/highscores.tscn" id="2_yok32"]
 [ext_resource type="PackedScene" uid="uid://e83m3of2xe73" path="res://Particles/past_portal_explosion.tscn" id="3_pvidh"]
 [ext_resource type="PackedScene" uid="uid://buygbq57qa0ek" path="res://Particles/portal_explosion.tscn" id="4_hptlk"]
 [ext_resource type="Texture2D" uid="uid://cqdvva3sgsqn2" path="res://Objects/Looper/PastLooper.png" id="6_ejkra"]
@@ -56,6 +57,9 @@ texture = ExtResource("7_oqads")
 [node name="Options" parent="." instance=ExtResource("2_pvidh")]
 visible = false
 
+[node name="Highscores" parent="." instance=ExtResource("2_yok32")]
+visible = false
+
 [node name="MainMenuButtons" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -75,10 +79,16 @@ theme = SubResource("Theme_ftydy")
 layout_mode = 2
 text = "Play"
 
+[node name="HighScores" type="Button" parent="MainMenuButtons"]
+layout_mode = 2
+text = "Highscores"
+
 [node name="Options" type="Button" parent="MainMenuButtons"]
 layout_mode = 2
 text = "Options"
 
 [connection signal="closeOption" from="Options" to="." method="_on_options_close_option"]
+[connection signal="back" from="Highscores" to="." method="_on_highscores_back"]
 [connection signal="pressed" from="MainMenuButtons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MainMenuButtons/HighScores" to="." method="_on_high_scores_pressed"]
 [connection signal="pressed" from="MainMenuButtons/Options" to="." method="_on_options_pressed"]

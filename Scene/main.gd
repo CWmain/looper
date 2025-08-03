@@ -5,6 +5,9 @@ Followed snake tutorial from "Coding with Russ" to create the basic framework
 for looper
 https://www.youtube.com/watch?app=desktop&v=DlRP-UBR-2A&ab_channel=CodingWithRuss
 """
+
+@export var saveFileString: String = "user://scores.txt"
+
 @onready var board: Sprite2D = $Board
 @onready var hud: CanvasLayer = $HUD
 @onready var game_over_screen: CanvasLayer = $GameOverScreen
@@ -29,6 +32,7 @@ func updateScore(value: int) -> void:
 
 func showGameOverScreen() -> void:
 	MusicController.playMenu()
+	saveScore()
 	game_over_screen.show()
 
 func startNewGame() -> void:
@@ -49,3 +53,31 @@ func _resumeGame() -> void:
 	pause_screen.hide()
 	MusicController.playGame()
 	get_tree().paused = false
+
+func saveScore():
+	var file = FileAccess.open(saveFileString, FileAccess.READ)
+	var stringFile: String
+	if (FileAccess.file_exists(saveFileString)):
+		file = FileAccess.open(saveFileString, FileAccess.READ)
+		stringFile = file.get_as_text()
+		file.close()
+	
+	# Get the highscore list
+	var highScores: Array[int]
+	if (stringFile.length() == 0):
+		highScores = [board.score]
+	else:
+		highScores = str_to_var(stringFile)
+		highScores.append(board.score)
+	
+	# Re-sort highscore list
+	highScores.sort()
+	
+	# Ensure only 5 Highscores are stored
+	if (highScores.size() > 10):
+		highScores.pop_front()
+	
+	# Save highscore list to file
+	file = FileAccess.open(saveFileString, FileAccess.WRITE)
+	file.store_line(var_to_str(highScores))
+	file.close()

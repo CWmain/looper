@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bum3q5felcu51"]
+
+[ext_resource type="Script" uid="uid://co8gucwmv4x2t" path="res://UI/highscores/highscores.gd" id="1_0g4ld"]
+
+[sub_resource type="Theme" id="Theme_0g4ld"]
+default_font_size = 64
+HBoxContainer/constants/separation = 64
+
+[node name="Highscores" type="CanvasLayer"]
+script = ExtResource("1_0g4ld")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -258.0
+offset_right = 258.0
+offset_bottom = 136.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 96
+text = "HighScores"
+
+[node name="ScoreList" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0g4ld")
+alignment = 1
+
+[node name="Bottom5" type="VBoxContainer" parent="VBoxContainer/ScoreList"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Top5" type="VBoxContainer" parent="VBoxContainer/ScoreList"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
